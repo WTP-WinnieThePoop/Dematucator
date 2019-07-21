@@ -14,5 +14,8 @@
   "icons": {
     "128": "icon_128.png"
   },
+  "web_accessible_resources": [
+    "wordlist.txt"
+  ],
   "manifest_version": 2
 }

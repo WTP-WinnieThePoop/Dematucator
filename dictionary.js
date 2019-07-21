@@ -22,7 +22,11 @@ var swearDictionary = {
     {"key": "пизд", "value": "богомольд"},
     {"key": "бля", "value": "богомоля"},
     {"key": "еб", "value": "дематюк"},
-    {"key": "ебу", "value": "дематюк"},    
     {"key": "ху", "value": "ольгу"},
   ]
 };
+
+let client = new XMLHttpRequest();
+client.open('GET', chrome.runtime.getURL("wordlist.txt"), false);
+client.send();
+var wordlist = client.responseText.split("\n");

@@ -1,18 +1,27 @@
 function domDFS(node) {
-  // console.log(node.nodeName);
   let child = node.firstChild;
 
   if (child == null)
     if (node.textContent) {
-      let searchMask = new RegExp("ё", "ig");
-      node.textContent = node.textContent.replace(searchMask, "е");
-
-      for (let entry of swearDictionary.entries) {
-        searchMask = new RegExp(entry.key, "ig");
-        node.textContent = node.textContent.replace(searchMask, entry.value);
+      let words = node.textContent.split(/([ ,:;\-\?\!\.])/g);
+      let result = "";
+      let changes = false;
+      for (let word of words) {
+        let adjustedWord = word.toLowerCase().replace("ё", "е");
+        if (wordlist.includes(adjustedWord)) {
+          for (let entry of swearDictionary.entries) {
+            if (adjustedWord.includes(entry.key))
+              changes = true;
+            adjustedWord = adjustedWord.replace(entry.key, entry.value);
+          }
+          result += adjustedWord + " ";
+        } else
+          result += word + " ";
       }
+      if (changes)
+        node.textContent = result;
     }
-    
+
   while (child) {
     domDFS(child);
     child = child.nextSibling;
